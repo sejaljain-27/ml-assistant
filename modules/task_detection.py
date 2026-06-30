@@ -1,19 +1,31 @@
 import pandas as pd
+from pandas.api.types import is_numeric_dtype
+
 def detect_task_type(df, target_column):
+
     target = df[target_column]
-    if target.dtype == 'object':
+
+    # Object/String target → Classification
+    if target.dtype == "object":
         return {
             "task_type": "Classification",
-            "reason": "target column is categorical."
+            "reason": "Target column is categorical."
         }
-    unique_values = target.nunique()
-    unique_ratio = unique_values / len(target)
-    if unique_values <= 20 and unique_ratio < 0.1:
-        return {
-            "task_type": "Classification",
-            "reason": f"target column has only {unique_values} unique values and behaves like a categorical label."
-        }
+
+    # Numeric target
+    if is_numeric_dtype(target):
+
+        unique = target.nunique()
+        rows = len(target)
+
+        # Binary or few classes
+        if unique <= min(20, rows * 0.05):
+            return {
+                "task_type": "Classification",
+                "reason": f"Target column has only {unique} unique values and behaves like a categorical label."
+            }
+
     return {
         "task_type": "Regression",
-        "reason": f"target column has {unique_values} unique values and behaves like continuous numerical data"
+        "reason": "Target behaves like a continuous numerical variable."
     }
