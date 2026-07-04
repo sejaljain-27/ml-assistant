@@ -21,7 +21,7 @@
 # print(imbalance_result)
 # print("\nMetric Recommendation:")
 # print(metric_result)
-from modules.recommend_preprocessing import recommend_preprocessing
+from backend.modules.recommend_preprocessing import recommend_preprocessing
 
 # result = recommend_preprocessing(
 #     missing_percentage=18,
@@ -102,24 +102,54 @@ from modules.recommend_preprocessing import recommend_preprocessing
 # result = detect_scaling(df)
 
 # print(result)
-import pandas as pd
+# 
+# import pandas as pd
+# from pipeline import run_pipeline
+# df = pd.read_csv("Titanic-Dataset (1).csv")
+# result = run_pipeline(df, target_column="your_target", dataset_name="Your Dataset")
+# from pprint import pprint
+# from backend.modules.pipeline import analyze_dataset
+# if __name__ == "__main__":
+#     result = analyze_dataset(
 
-from modules.feature_selection import feature_selection
+#         "weight-height.csv",
+#         "Weight"
+#     )
 
-df = pd.read_csv("Titanic-Dataset (1).csv")
+#     pprint(result)
+# from backend.modules.dataset_health_score import calculate_health_score
 
-result = feature_selection(
+# result = calculate_health_score(
 
-    df,
+#     missing_percentage=18,
 
-    target_column="Survived",
+#     duplicate_rows=5,
 
-    problem_type="classification",
+#     total_rows=1000,
 
-    top_k=5
+#     is_imbalanced=True,
+
+#     highly_correlated=True,
+
+#     has_outliers=True,
+
+#     high_cardinality=False,
+
+#     need_scaling=True
+
+# )
+
+# from pprint import pprint
+
+# pprint(result)
+from backend.modules.pipeline import analyze_dataset
+
+result = analyze_dataset(
+
+    "Titanic-Dataset (1).csv",
+
+    "Survived"
 
 )
 
-from pprint import pprint
-
-pprint(result)
+print(result)
