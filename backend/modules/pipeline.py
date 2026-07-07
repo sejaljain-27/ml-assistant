@@ -17,6 +17,8 @@ from .train_models import train_models
 from .model_comparison import compare_models
 from .dataset_health_score import calculate_health_score
 from .graph_generator import GraphGenerator
+from .hyperparameter_tuning import tune_best_model
+from .cross_validation import cross_validate_model
 
 
 def analyze_dataset(file_path, target_column):
@@ -190,6 +192,24 @@ def analyze_dataset(file_path, target_column):
         task
 
     )
+    best_model_name = comparison["best_model"]
+
+    tuned_model = tune_best_model(
+        
+        best_model_name,
+        
+        prepared,
+        
+        task
+    )
+    cross_validation = cross_validate_model(
+        
+        tuned_model,
+        
+        prepared,
+        
+        task
+    )
     graph_generator=GraphGenerator()
     graphs=graph_generator.generate_all(
         df,
@@ -233,7 +253,11 @@ def analyze_dataset(file_path, target_column):
 
         "possible_challenges": challenges,
 
-        "model_comparison": comparison
+        "model_comparison": comparison,
+        
+        "hyperparameter_tuning": tuned_model,
+
+        "cross_validation": cross_validation
 
     }
 
