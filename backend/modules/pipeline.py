@@ -16,6 +16,7 @@ from .prepare_pipeline import prepare_pipeline
 from .train_models import train_models
 from .model_comparison import compare_models
 from .dataset_health_score import calculate_health_score
+from .graph_generator import GraphGenerator
 
 
 def analyze_dataset(file_path, target_column):
@@ -161,7 +162,7 @@ def analyze_dataset(file_path, target_column):
         task
 
     )
-
+    
     # ======================================
     # ML Pipeline
     # ======================================
@@ -189,6 +190,14 @@ def analyze_dataset(file_path, target_column):
         task
 
     )
+    graph_generator=GraphGenerator()
+    graphs=graph_generator.generate_all(
+        df,
+        target_column,
+        features,
+        comparison
+    )
+
 
     # ======================================
     # Final Result
@@ -199,6 +208,8 @@ def analyze_dataset(file_path, target_column):
         "task_detection": task,
 
         "health_score": health_score,
+
+        "graphs":graphs,
 
         "data_quality": quality,
 
