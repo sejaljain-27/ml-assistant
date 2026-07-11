@@ -194,22 +194,20 @@ def analyze_dataset(file_path, target_column):
     )
     best_model_name = comparison["best_model"]
 
-    tuned_model = tune_best_model(
-        
+    tuning_result = tune_best_model(
         best_model_name,
-        
         prepared,
-        
         task
     )
+
+    tuned_model = tuning_result["model"]
+
     cross_validation = cross_validate_model(
-        
         tuned_model,
-        
         prepared,
-        
         task
     )
+    
     graph_generator=GraphGenerator()
     graphs=graph_generator.generate_all(
         df,
@@ -255,7 +253,7 @@ def analyze_dataset(file_path, target_column):
 
         "model_comparison": comparison,
         
-        "hyperparameter_tuning": tuned_model,
+        "hyperparameter_tuning": tuning_result["summary"],
 
         "cross_validation": cross_validation
 
