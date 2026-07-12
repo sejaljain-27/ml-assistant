@@ -1,0 +1,36 @@
+// Mirrors `GET /api/history`
+export const history = [
+  {
+    id: 'run-1042',
+    fileName: 'Titanic-Dataset.csv',
+    date: '2026-07-10T14:22:00Z',
+    problemType: 'Classification',
+    rows: 891,
+    columns: 12,
+    healthScore: 84,
+    bestModel: 'Random Forest',
+    bestAccuracy: 86.34,
+  },
+  {
+    id: 'run-1038',
+    fileName: 'weight-height.csv',
+    date: '2026-07-08T09:05:00Z',
+    problemType: 'Regression',
+    rows: 10000,
+    columns: 3,
+    healthScore: 97,
+    bestModel: 'Linear Regression',
+    bestAccuracy: 91.2,
+  },
+  {
+    id: 'run-1021',
+    fileName: 'customer_churn.csv',
+    date: '2026-07-02T18:40:00Z',
+    problemType: 'Classification',
+    rows: 7043,
+    columns: 21,
+    healthScore: 76,
+    bestModel: 'XGBoost',
+    bestAccuracy: 80.5,
+  },
+]
