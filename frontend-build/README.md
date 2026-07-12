@@ -1,6 +1,6 @@
-# ML Compass AI — Frontend
+# ML assistant — Frontend
 
-A React + Vite + Tailwind CSS dashboard for **ML Compass AI**, an assistant that analyzes a
+A React + Vite + Tailwind CSS dashboard for **ML Assiant**, an assistant that analyzes a
 CSV dataset and gives you data-quality, preprocessing, feature-importance, and model
 recommendations before you train anything.
 
