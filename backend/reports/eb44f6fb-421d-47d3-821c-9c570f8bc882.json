@@ -1,0 +1,623 @@
+{
+    "task_detection": {
+        "task_type": "Classification",
+        "reason": "Target column has only 2 unique values and behaves like a categorical label."
+    },
+    "health_score": {
+        "score": 78,
+        "status": "Good",
+        "emoji": "\ud83d\udfe1",
+        "deductions": [
+            "-5 : Small amount of missing values",
+            "-8 : Outliers detected",
+            "-5 : High-cardinality columns",
+            "-4 : Feature scaling recommended"
+        ],
+        "recommendations": [
+            "Apply Mean / Median Imputation.",
+            "Use IQR or Winsorization.",
+            "Use Target Encoding.",
+            "Apply StandardScaler or RobustScaler."
+        ]
+    },
+    "graphs": {
+        "missing_values": "/graphs/missing_values.png",
+        "correlation_heatmap": "/graphs/correlation_heatmap.png",
+        "class_distribution": "/graphs/class_distribution.png",
+        "feature_importance": "/graphs/feature_importance.png",
+        "model_comparison": "/graphs/model_comparison.png"
+    },
+    "data_quality": {
+        "data_quality_score": 95.95,
+        "missing_percent": 8.1,
+        "duplicate_percent": 0.0,
+        "constant_columns": [],
+        "rows": 891,
+        "columns": 12,
+        "by_column": [
+            {
+                "column": "PassengerId",
+                "pct": 0.0
+            },
+            {
+                "column": "Survived",
+                "pct": 0.0
+            },
+            {
+                "column": "Pclass",
+                "pct": 0.0
+            },
+            {
+                "column": "Name",
+                "pct": 0.0
+            },
+            {
+                "column": "Sex",
+                "pct": 0.0
+            },
+            {
+                "column": "Age",
+                "pct": 19.87
+            },
+            {
+                "column": "SibSp",
+                "pct": 0.0
+            },
+            {
+                "column": "Parch",
+                "pct": 0.0
+            },
+            {
+                "column": "Ticket",
+                "pct": 0.0
+            },
+            {
+                "column": "Fare",
+                "pct": 0.0
+            },
+            {
+                "column": "Cabin",
+                "pct": 77.1
+            },
+            {
+                "column": "Embarked",
+                "pct": 0.22
+            }
+        ]
+    },
+    "imbalance_detection": {
+        "imbalanced": false,
+        "percentages": {
+            "0": 61.61616161616161,
+            "1": 38.38383838383838
+        },
+        "reason": "Classes reasonably balanced"
+    },
+    "correlation_detection": {
+        "highly_correlated": false,
+        "num_pairs": 0,
+        "pairs": [],
+        "columns_to_remove": [],
+        "features": [
+            "PassengerId",
+            "Survived",
+            "Pclass",
+            "Age",
+            "SibSp",
+            "Parch",
+            "Fare"
+        ],
+        "matrix": [
+            [
+                1.0,
+                -0.005,
+                -0.0351,
+                0.0368,
+                -0.0575,
+                -0.0017,
+                0.0127
+            ],
+            [
+                -0.005,
+                1.0,
+                -0.3385,
+                -0.0772,
+                -0.0353,
+                0.0816,
+                0.2573
+            ],
+            [
+                -0.0351,
+                -0.3385,
+                1.0,
+                -0.3692,
+                0.0831,
+                0.0184,
+                -0.5495
+            ],
+            [
+                0.0368,
+                -0.0772,
+                -0.3692,
+                1.0,
+                -0.3082,
+                -0.1891,
+                0.0961
+            ],
+            [
+                -0.0575,
+                -0.0353,
+                0.0831,
+                -0.3082,
+                1.0,
+                0.4148,
+                0.1597
+            ],
+            [
+                -0.0017,
+                0.0816,
+                0.0184,
+                -0.1891,
+                0.4148,
+                1.0,
+                0.2162
+            ],
+            [
+                0.0127,
+                0.2573,
+                -0.5495,
+                0.0961,
+                0.1597,
+                0.2162,
+                1.0
+            ]
+        ],
+        "reason": "No highly correlated features found."
+    },
+    "outlier_detection": {
+        "has_outliers": true,
+        "total_outliers": 386,
+        "columns": [
+            "Age",
+            "SibSp",
+            "Parch",
+            "Fare"
+        ],
+        "details": [
+            {
+                "column": "Age",
+                "count": 11,
+                "percentage": 1.23,
+                "lower_bound": -6.69,
+                "upper_bound": 64.81
+            },
+            {
+                "column": "SibSp",
+                "count": 46,
+                "percentage": 5.16,
+                "lower_bound": -1.5,
+                "upper_bound": 2.5
+            },
+            {
+                "column": "Parch",
+                "count": 213,
+                "percentage": 23.91,
+                "lower_bound": 0.0,
+                "upper_bound": 0.0
+            },
+            {
+                "column": "Fare",
+                "count": 116,
+                "percentage": 13.02,
+                "lower_bound": -26.72,
+                "upper_bound": 65.63
+            }
+        ],
+        "reason": "386 outliers detected."
+    },
+    "cardinality_detection": {
+        "high_cardinality": true,
+        "columns": [
+            "Name",
+            "Ticket",
+            "Cabin"
+        ],
+        "details": [
+            {
+                "column": "Name",
+                "unique_values": 891,
+                "percentage": 100.0,
+                "recommendation": "Target Encoding"
+            },
+            {
+                "column": "Ticket",
+                "unique_values": 681,
+                "percentage": 76.43,
+                "recommendation": "Target Encoding"
+            },
+            {
+                "column": "Cabin",
+                "unique_values": 147,
+                "percentage": 16.5,
+                "recommendation": "Target Encoding"
+            }
+        ],
+        "reason": "3 high-cardinality column(s) detected."
+    },
+    "scaling_detection": {
+        "need_scaling": true,
+        "recommended_scaler": "StandardScaler",
+        "range_ratio": 890.0,
+        "details": [
+            {
+                "column": "PassengerId",
+                "min": 1.0,
+                "max": 891.0,
+                "range": 890.0
+            },
+            {
+                "column": "Survived",
+                "min": 0.0,
+                "max": 1.0,
+                "range": 1.0
+            },
+            {
+                "column": "Pclass",
+                "min": 1.0,
+                "max": 3.0,
+                "range": 2.0
+            },
+            {
+                "column": "Age",
+                "min": 0.42,
+                "max": 80.0,
+                "range": 79.58
+            },
+            {
+                "column": "SibSp",
+                "min": 0.0,
+                "max": 8.0,
+                "range": 8.0
+            },
+            {
+                "column": "Parch",
+                "min": 0.0,
+                "max": 6.0,
+                "range": 6.0
+            },
+            {
+                "column": "Fare",
+                "min": 0.0,
+                "max": 512.3292,
+                "range": 512.33
+            }
+        ],
+        "reason": "Feature ranges differ significantly (ratio = 890.00)."
+    },
+    "feature_selection": {
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "Sex",
+                "importance": 0.1572,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 2,
+                "feature": "Fare",
+                "importance": 0.1384,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 3,
+                "feature": "Ticket",
+                "importance": 0.1203,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 4,
+                "feature": "Embarked",
+                "importance": 0.0656,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 5,
+                "feature": "Cabin",
+                "importance": 0.0583,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 6,
+                "feature": "Pclass",
+                "importance": 0.0489,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 7,
+                "feature": "SibSp",
+                "importance": 0.0171,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 8,
+                "feature": "Parch",
+                "importance": 0.0066,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 9,
+                "feature": "Age",
+                "importance": 0.0,
+                "recommendation": "Keep"
+            }
+        ],
+        "ignored_features": [
+            {
+                "feature": "PassengerId",
+                "reason": "Identifier / Nearly unique column"
+            },
+            {
+                "feature": "Name",
+                "reason": "Identifier / Nearly unique column"
+            }
+        ],
+        "most_important": "Sex",
+        "total_features_used": 9,
+        "total_features_ignored": 2,
+        "reason": "Top 10 features selected using Mutual Information."
+    },
+    "recommended_metric": {
+        "metrics": [
+            "Accuracy",
+            "Precision",
+            "Recall"
+        ],
+        "reason": "Balanced classification problem."
+    },
+    "recommended_preprocessing": [
+        {
+            "severity": "Low",
+            "recommendation": "Mean/Median Imputation",
+            "reason": "8.10% missing values detected.",
+            "action": "Fill missing values before training."
+        },
+        {
+            "severity": "Medium",
+            "recommendation": "One-Hot Encoding",
+            "reason": "5 categorical columns found.",
+            "action": "Convert categorical variables into numerical format."
+        },
+        {
+            "severity": "Medium",
+            "recommendation": "Target Encoding",
+            "reason": "High-cardinality categorical features detected.",
+            "action": "Avoid excessive one-hot encoded dimensions."
+        },
+        {
+            "severity": "Medium",
+            "recommendation": "Handle Outliers",
+            "reason": "Extreme values detected.",
+            "action": "Use IQR method or Winsorization."
+        },
+        {
+            "severity": "Medium",
+            "recommendation": "Apply StandardScaler",
+            "reason": "Large feature scale differences detected.",
+            "action": "Normalize feature ranges."
+        },
+        {
+            "severity": "Medium",
+            "recommendation": "Use Simpler Models",
+            "reason": "Small dataset size detected.",
+            "action": "Prefer Logistic Regression or Random Forest."
+        }
+    ],
+    "suggested_models": {
+        "recommended_models": [
+            "Logistic Regression",
+            "Random Forest",
+            "SVM",
+            "CatBoost"
+        ]
+    },
+    "possible_challenges": {
+        "challenges": [
+            {
+                "type": "Small Dataset Size",
+                "severity": "Medium",
+                "description": "The dataset has only 891 rows. Neural networks or complex models might overfit."
+            }
+        ]
+    },
+    "model_comparison": {
+        "best_model": "Logistic Regression",
+        "comparison": {
+            "Logistic Regression": {
+                "Accuracy": 0.8212,
+                "Precision": 0.8206,
+                "Recall": 0.8212,
+                "F1 Score": 0.8199,
+                "Prediction Time (s)": 0.00044
+            },
+            "Decision Tree": {
+                "Accuracy": 0.8101,
+                "Precision": 0.8113,
+                "Recall": 0.8101,
+                "F1 Score": 0.8068,
+                "Prediction Time (s)": 0.00042
+            },
+            "Random Forest": {
+                "Accuracy": 0.8045,
+                "Precision": 0.8049,
+                "Recall": 0.8045,
+                "F1 Score": 0.8015,
+                "Prediction Time (s)": 0.01141
+            },
+            "XGBoost": {
+                "Accuracy": 0.7821,
+                "Precision": 0.7826,
+                "Recall": 0.7821,
+                "F1 Score": 0.7823,
+                "Prediction Time (s)": 0.00176
+            }
+        },
+        "ranking": [
+            {
+                "Rank": 1,
+                "Model": "Logistic Regression",
+                "Accuracy": 0.8212,
+                "Precision": 0.8206,
+                "Recall": 0.8212,
+                "F1 Score": 0.8199,
+                "Prediction Time (s)": 0.00044
+            },
+            {
+                "Rank": 2,
+                "Model": "Decision Tree",
+                "Accuracy": 0.8101,
+                "Precision": 0.8113,
+                "Recall": 0.8101,
+                "F1 Score": 0.8068,
+                "Prediction Time (s)": 0.00042
+            },
+            {
+                "Rank": 3,
+                "Model": "Random Forest",
+                "Accuracy": 0.8045,
+                "Precision": 0.8049,
+                "Recall": 0.8045,
+                "F1 Score": 0.8015,
+                "Prediction Time (s)": 0.01141
+            },
+            {
+                "Rank": 4,
+                "Model": "XGBoost",
+                "Accuracy": 0.7821,
+                "Precision": 0.7826,
+                "Recall": 0.7821,
+                "F1 Score": 0.7823,
+                "Prediction Time (s)": 0.00176
+            }
+        ]
+    },
+    "hyperparameter_tuning": {
+        "best_model": "Logistic Regression",
+        "best_params": {
+            "C": 1,
+            "solver": "liblinear"
+        },
+        "best_cv_score": 0.816,
+        "search_space": {
+            "C": [
+                0.01,
+                0.1,
+                1,
+                10
+            ],
+            "solver": [
+                "lbfgs",
+                "liblinear"
+            ]
+        }
+    },
+    "cross_validation": {
+        "cv_folds": 5,
+        "scores": [
+            0.8321678321678322,
+            0.8321678321678322,
+            0.8098591549295775,
+            0.7746478873239436,
+            0.8309859154929577
+        ],
+        "mean_score": 0.816,
+        "std_score": 0.0223
+    },
+    "preview": {
+        "columns": [
+            "PassengerId",
+            "Survived",
+            "Pclass",
+            "Name",
+            "Sex",
+            "Age",
+            "SibSp",
+            "Parch",
+            "Ticket",
+            "Fare",
+            "Cabin",
+            "Embarked"
+        ],
+        "rows": [
+            {
+                "PassengerId": 1,
+                "Survived": 0,
+                "Pclass": 3,
+                "Name": "Braund, Mr. Owen Harris",
+                "Sex": "male",
+                "Age": 22.0,
+                "SibSp": 1,
+                "Parch": 0,
+                "Ticket": "A/5 21171",
+                "Fare": 7.25,
+                "Cabin": null,
+                "Embarked": "S"
+            },
+            {
+                "PassengerId": 2,
+                "Survived": 1,
+                "Pclass": 1,
+                "Name": "Cumings, Mrs. John Bradley (Florence Briggs Thayer)",
+                "Sex": "female",
+                "Age": 38.0,
+                "SibSp": 1,
+                "Parch": 0,
+                "Ticket": "PC 17599",
+                "Fare": 71.2833,
+                "Cabin": "C85",
+                "Embarked": "C"
+            },
+            {
+                "PassengerId": 3,
+                "Survived": 1,
+                "Pclass": 3,
+                "Name": "Heikkinen, Miss. Laina",
+                "Sex": "female",
+                "Age": 26.0,
+                "SibSp": 0,
+                "Parch": 0,
+                "Ticket": "STON/O2. 3101282",
+                "Fare": 7.925,
+                "Cabin": null,
+                "Embarked": "S"
+            },
+            {
+                "PassengerId": 4,
+                "Survived": 1,
+                "Pclass": 1,
+                "Name": "Futrelle, Mrs. Jacques Heath (Lily May Peel)",
+                "Sex": "female",
+                "Age": 35.0,
+                "SibSp": 1,
+                "Parch": 0,
+                "Ticket": "113803",
+                "Fare": 53.1,
+                "Cabin": "C123",
+                "Embarked": "S"
+            },
+            {
+                "PassengerId": 5,
+                "Survived": 0,
+                "Pclass": 3,
+                "Name": "Allen, Mr. William Henry",
+                "Sex": "male",
+                "Age": 35.0,
+                "SibSp": 0,
+                "Parch": 0,
+                "Ticket": "373450",
+                "Fare": 8.05,
+                "Cabin": null,
+                "Embarked": "S"
+            }
+        ]
+    }
+}

@@ -128,7 +128,8 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
             "summary": {
                 "best_model": best_model_name,
                 "best_params": {},
-                "best_cv_score": None
+                "best_cv_score": None,
+                "search_space": {}
             }
         }
 
@@ -140,8 +141,7 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         estimator=model,
         param_grid=params,
         cv=5,
-        scoring=scoring,
-        n_jobs=-1
+        scoring=scoring
     )
 
     grid.fit(X_train, y_train)
@@ -151,6 +151,7 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         "summary": {
             "best_model": best_model_name,
             "best_params": grid.best_params_,
-            "best_cv_score": float(round(grid.best_score_, 4))
+            "best_cv_score": float(round(grid.best_score_, 4)),
+            "search_space": params
         }
     }

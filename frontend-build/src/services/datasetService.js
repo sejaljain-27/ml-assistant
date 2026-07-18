@@ -28,7 +28,7 @@ export const datasetService = {
     const formData = new FormData()
     formData.append('file', file)
     formData.append('target_column', targetColumn)
-    const { data } = await apiClient.post('/dataset/upload', formData, {
+    const { data } = await apiClient.post('/analyze', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
     return data

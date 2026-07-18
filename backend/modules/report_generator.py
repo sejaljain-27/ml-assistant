@@ -93,7 +93,7 @@ def report_to_dataframe(report):
             ", ".join(report["Suggested Models"]),
 
         "Challenges":
-            ", ".join(report["Possible Challenges"])
+            ", ".join([c["type"] for c in report["Possible Challenges"]])
             if report["Possible Challenges"]
             else "None",
 

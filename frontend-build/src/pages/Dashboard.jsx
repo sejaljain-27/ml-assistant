@@ -8,23 +8,56 @@ import Badge from '../components/ui/Badge.jsx'
 import ClassDistributionPie from '../components/charts/ClassDistributionPie.jsx'
 import { datasetService } from '../services/datasetService.js'
 
+import { useDataset } from '../context/DatasetContext.jsx'
+
 export default function Dashboard() {
   const navigate = useNavigate()
-  const [data, setData] = useState(null)
+  const { dataset } = useDataset()
 
-  useEffect(() => {
-    let active = true
-    datasetService.getOverview().then((res) => {
-      if (active) setData(res)
-    })
-    return () => {
-      active = false
-    }
-  }, [])
+  if (!dataset || !dataset.analysisResult) {
+    return (
+      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center p-6 bg-surface-card rounded-xl border border-surface-border/40">
+        <h2 className="text-xl font-normal text-slate-100">No Dataset Active</h2>
+        <p className="mt-2 text-sm text-slate-400 max-w-sm">
+          Please upload and analyze a CSV dataset first to view the dashboard.
+        </p>
+        <button
+          type="button"
+          onClick={() => navigate('/upload')}
+          className="mt-6 btn-primary"
+        >
+          Go to Upload
+        </button>
+      </div>
+    )
+  }
 
-  if (!data) return <Spinner label="Loading dataset overview..." />
+  const data = dataset.analysisResult
+  const healthScore = data.health_score.score
+  const healthLabel = data.health_score.status
+  const rows = data.data_quality.rows
+  const columns = data.data_quality.columns
+  const missingValuesPct = data.data_quality.missing_percent
+  const missingValuesLabel = missingValuesPct > 20 ? 'High' : missingValuesPct > 5 ? 'Medium' : missingValuesPct > 0 ? 'Low' : 'None'
+  const duplicateRows = Math.round((data.data_quality.duplicate_percent / 100) * rows)
+  const duplicateRowsLabel = duplicateRows > 0 ? `${duplicateRows} duplicate rows` : 'No duplicates'
+  
+  const quickSummary = {
+    problemType: data.task_detection.task_type,
+    targetColumn: dataset.targetColumn,
+    uniqueClasses: data.task_detection.task_type === 'Classification' ? Object.keys(data.imbalance_detection.percentages).length : 'N/A',
+    classImbalance: data.task_detection.task_type === 'Classification' ? (data.imbalance_detection.imbalanced ? 'High' : 'Low') : 'N/A'
+  }
 
-  const { healthScore, healthLabel, rows, columns, missingValuesPct, missingValuesLabel, duplicateRows, duplicateRowsLabel, quickSummary, preview } = data
+  const classDistribution = data.task_detection.task_type === 'Classification'
+    ? Object.entries(data.imbalance_detection.percentages).map(([name, pct]) => ({
+        name: `Class ${name}`,
+        value: Math.round((pct / 100) * rows),
+        pct: pct
+      }))
+    : null
+
+  const preview = data.preview
 
   return (
     <div className="space-y-6">
@@ -105,10 +138,10 @@ export default function Dashboard() {
               </div>
             </dl>
 
-            {data.classDistribution && (
+            {classDistribution && (
               <div className="flex flex-col items-center justify-center">
                 <p className="text-xs font-medium text-slate-500 mb-1">Class Distribution</p>
-                <ClassDistributionPie data={data.classDistribution} />
+                <ClassDistributionPie data={classDistribution} />
               </div>
             )}
           </div>

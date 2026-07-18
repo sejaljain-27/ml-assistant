@@ -94,7 +94,10 @@ class GraphGenerator:
     # Class Distribution
     # -----------------------------------
 
-    def class_distribution(self, df, target):
+    def class_distribution(self, df, target, task_type="Classification"):
+
+        if task_type == "Regression":
+            return None
 
         counts = df[target].value_counts()
 
@@ -163,14 +166,18 @@ class GraphGenerator:
     def model_accuracy_graph(self, comparison):
 
         ranking = comparison["ranking"]
+        if not ranking:
+            return None
 
         models = [
             x["Model"]
             for x in ranking
         ]
 
+        metric_name = "Accuracy" if "Accuracy" in ranking[0] else "R² Score"
+
         accuracy = [
-            x["Accuracy"]
+            x[metric_name]
             for x in ranking
         ]
 
@@ -178,7 +185,7 @@ class GraphGenerator:
 
         plt.bar(models, accuracy)
 
-        plt.ylabel("Accuracy")
+        plt.ylabel(metric_name)
 
         plt.title("Model Comparison")
 
@@ -209,7 +216,9 @@ class GraphGenerator:
 
         feature_result,
 
-        comparison
+        comparison,
+
+        task_type="Classification"
 
     ):
 
@@ -222,7 +231,7 @@ class GraphGenerator:
                 self.correlation_heatmap(df),
 
             "class_distribution":
-                self.class_distribution(df, target),
+                self.class_distribution(df, target, task_type),
 
             "feature_importance":
                 self.feature_importance_graph(feature_result),

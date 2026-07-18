@@ -1,25 +1,48 @@
-import { useEffect, useState } from 'react'
+import { useDataset } from '../context/DatasetContext.jsx'
+import { useNavigate } from 'react-router-dom'
 import Card from '../components/ui/Card.jsx'
-import Spinner from '../components/ui/Spinner.jsx'
 import Badge from '../components/ui/Badge.jsx'
-import { datasetService } from '../services/datasetService.js'
 
 const PRIORITY_VARIANT = { High: 'danger', Medium: 'warning', Low: 'info' }
 
 export default function Preprocessing() {
-  const [data, setData] = useState(null)
+  const navigate = useNavigate()
+  const { dataset } = useDataset()
 
-  useEffect(() => {
-    let active = true
-    datasetService.getPreprocessingRecommendations().then((res) => {
-      if (active) setData(res)
-    })
-    return () => {
-      active = false
-    }
-  }, [])
+  if (!dataset || !dataset.analysisResult) {
+    return (
+      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center p-6 bg-surface-card rounded-xl border border-surface-border/40">
+        <h2 className="text-xl font-normal text-slate-100">No Dataset Active</h2>
+        <p className="mt-2 text-sm text-slate-400 max-w-sm">
+          Please upload and analyze a CSV dataset first to view preprocessing steps.
+        </p>
+        <button
+          type="button"
+          onClick={() => navigate('/upload')}
+          className="mt-6 btn-primary"
+        >
+          Go to Upload
+        </button>
+      </div>
+    )
+  }
 
-  if (!data) return <Spinner label="Preparing preprocessing plan..." />
+  const result = dataset.analysisResult
+  const steps = (result.recommended_preprocessing || []).map((step, idx) => ({
+    id: `step-${idx}`,
+    title: step.recommendation,
+    description: step.action,
+    priority: step.severity,
+    column: step.reason
+  }))
+
+  const outliers = (result.outlier_detection.details || []).map(d => ({
+    column: d.column,
+    count: d.count,
+    method: 'IQR'
+  }))
+
+  const data = { steps, outliers }
 
   return (
     <div className="space-y-6">

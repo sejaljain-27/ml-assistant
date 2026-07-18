@@ -29,6 +29,14 @@ def analyze_dataset(file_path, target_column):
 
     df = pd.read_csv(file_path)
 
+    # Generate dataset preview
+    preview_df = df.head(5)
+    preview_df = preview_df.where(pd.notnull(preview_df), None)
+    preview = {
+        "columns": list(df.columns),
+        "rows": preview_df.to_dict(orient="records")
+    }
+
     # ======================================
     # Dataset Analysis
     # ======================================
@@ -213,7 +221,8 @@ def analyze_dataset(file_path, target_column):
         df,
         target_column,
         features,
-        comparison
+        comparison,
+        task["task_type"]
     )
 
 
@@ -255,7 +264,9 @@ def analyze_dataset(file_path, target_column):
         
         "hyperparameter_tuning": tuning_result["summary"],
 
-        "cross_validation": cross_validation
+        "cross_validation": cross_validation,
+
+        "preview": preview
 
     }
 

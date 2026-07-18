@@ -3,8 +3,24 @@ import { createContext, useContext, useMemo, useState } from 'react'
 const DatasetContext = createContext(null)
 
 export function DatasetProvider({ children }) {
-  const [dataset, setDataset] = useState(null) // { fileName, targetColumn } | null
+  const [dataset, setDatasetState] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('dataset')
+      return saved ? JSON.parse(saved) : null
+    } catch (e) {
+      return null
+    }
+  })
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+
+  const setDataset = (data) => {
+    setDatasetState(data)
+    if (data) {
+      sessionStorage.setItem('dataset', JSON.stringify(data))
+    } else {
+      sessionStorage.removeItem('dataset')
+    }
+  }
 
   const value = useMemo(
     () => ({
@@ -12,7 +28,7 @@ export function DatasetProvider({ children }) {
       setDataset,
       isAnalyzing,
       setIsAnalyzing,
-      hasDataset: Boolean(dataset),
+      hasDataset: Boolean(dataset && dataset.analysisResult),
     }),
     [dataset, isAnalyzing],
   )

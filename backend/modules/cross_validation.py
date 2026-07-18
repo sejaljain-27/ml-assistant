@@ -28,8 +28,7 @@ def cross_validate_model(model, pipeline_result, task_type):
         X=X_train_processed,
         y=y_train,
         cv=cv,
-        scoring=scoring,
-        n_jobs=-1
+        scoring=scoring
     )
 
     return {

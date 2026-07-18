@@ -1,25 +1,57 @@
-import { useEffect, useState } from 'react'
+import { useDataset } from '../context/DatasetContext.jsx'
+import { useNavigate } from 'react-router-dom'
 import Card from '../components/ui/Card.jsx'
-import Spinner from '../components/ui/Spinner.jsx'
 import RecommendationBox from '../components/ui/RecommendationBox.jsx'
 import HorizontalBarChart from '../components/charts/HorizontalBarChart.jsx'
 import CorrelationHeatmap from '../components/charts/CorrelationHeatmap.jsx'
-import { datasetService } from '../services/datasetService.js'
 
 export default function FeatureAnalysis() {
-  const [data, setData] = useState(null)
+  const navigate = useNavigate()
+  const { dataset } = useDataset()
 
-  useEffect(() => {
-    let active = true
-    datasetService.getFeatureImportance().then((res) => {
-      if (active) setData(res)
-    })
-    return () => {
-      active = false
-    }
-  }, [])
+  if (!dataset || !dataset.analysisResult) {
+    return (
+      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center p-6 bg-surface-card rounded-xl border border-surface-border/40">
+        <h2 className="text-xl font-normal text-slate-100">No Dataset Active</h2>
+        <p className="mt-2 text-sm text-slate-400 max-w-sm">
+          Please upload and analyze a CSV dataset first to view feature analysis.
+        </p>
+        <button
+          type="button"
+          onClick={() => navigate('/upload')}
+          className="mt-6 btn-primary"
+        >
+          Go to Upload
+        </button>
+      </div>
+    )
+  }
 
-  if (!data) return <Spinner label="Ranking feature importance..." />
+  const result = dataset.analysisResult
+  const topFeatures = (result.feature_selection.top_features || []).slice(0, 5).map(f => ({
+    rank: f.rank,
+    name: f.feature,
+    score: f.importance
+  }))
+
+  const mutualInformation = (result.feature_selection.top_features || []).map(f => ({
+    name: f.feature,
+    score: f.importance
+  }))
+
+  const correlations = result.correlation_detection.features && result.correlation_detection.features.length > 0
+    ? {
+        features: result.correlation_detection.features,
+        matrix: result.correlation_detection.matrix
+      }
+    : null
+
+  const data = {
+    topFeatures,
+    mutualInformation,
+    insight: result.feature_selection.reason || 'Mutual Information ranking computed.',
+    correlations
+  }
 
   return (
     <div className="space-y-6">

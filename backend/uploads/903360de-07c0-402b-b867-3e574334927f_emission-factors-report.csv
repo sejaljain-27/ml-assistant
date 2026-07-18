@@ -1,0 +1,19 @@
+Name,Category,Scope,Value,Unit,Source,Valid From,Valid To,Status
+Shipping (Sea Freight),Logistics,Scope 3,0.011,kgCO2e/km,DEFRA 2025,1/1/2025,31/12/2025,Draft
+Server Operations,IT Infrastructure,Scope 2,0.45,kgCO2e/kWh,AWS Sustainability,1/1/2025,31/12/2026,Draft
+Paper (Office),Office Supplies,Scope 3,1.2,kgCO2e/kg,Carbon Trust,1/1/2025,31/12/2026,Draft
+Waste Disposal,Waste,Scope 3,1.8,kgCO2e/kg,UK Environment Agency,1/1/2025,31/12/2026,Draft
+Water Usage,Utilities,Scope 3,0.35,kgCO2e/unit,WaterAid,1/1/2025,31/12/2026,Draft
+Employee Commuting,Transportation,Scope 3,0.192,kgCO2e/km,DEFRA 2025,1/1/2025,31/12/2025,Draft
+Business Air Travel,Transportation,Scope 3,0.255,kgCO2e/km,DEFRA 2025,1/1/2025,31/12/2025,Draft
+Plastic Packaging,Raw Materials,Scope 3,3.5,kgCO2e/kg,Carbon Trust,1/1/2025,31/12/2026,Draft
+Steel (Raw Material),Raw Materials,Scope 3,2.1,kgCO2e/kg,Ecoinvent,1/1/2025,31/12/2026,Draft
+Aluminum (Raw Material),Raw Materials,Scope 3,12.5,kgCO2e/kg,Ecoinvent,1/1/2025,31/12/2026,Draft
+Renewable Energy,Energy,Scope 2,0.025,kgCO2e/kWh,Green Energy Association,1/1/2025,31/12/2026,Draft
+Grid Electricity,Energy,Scope 2,0.281,kgCO2e/kWh,UK Government,1/1/2024,31/12/2025,Draft
+Natural Gas (Heating),Fuels,Scope 1,0.205,kgCO2e/kWh,DEFRA 2025,1/1/2025,1/1/2026,Draft
+Petrol (Fleet),Fleet Fuels,Scope 1,2.31,kgCO2e/litre,DEFRA 2025,1/1/2025,31/12/2025,Draft
+Diesel (Fleet),Fleet Fuels,Scope 1,2.68,kgCO2e/litre,DEFRA 2025,1/1/2025,31/12/2025,Draft
+Recycled Polyethylene EF,Office Supplies,Scope 3,1.85,kgCO2e/kg,Ecoinvent 2026,1/1/2026,Open,Active
+Diesel,Diesel Fleet,Scope 1,3,kgCO2e/litre,DEFRA 2025,9/7/2026,16/7/2026,Active
+Diesel,Diesel Fleet,Scope 2,3,kgCO2e/litre,DEFRA 2025,17/7/2026,21/7/2026,Draft

@@ -1,0 +1,68 @@
+[
+    {
+        "id": "3f4aa748-9c57-4c51-be8e-dba502df3462",
+        "fileName": "placement (3).csv",
+        "date": "2026-07-18T18:22:55.924883Z",
+        "problemType": "Classification",
+        "rows": 100,
+        "columns": 3,
+        "healthScore": 100,
+        "bestModel": "Logistic Regression",
+        "bestAccuracy": 100.0
+    },
+    {
+        "id": "660ed5d4-a80f-48fa-866a-9d9f61af6554",
+        "fileName": "weight-height.csv",
+        "date": "2026-07-18T18:07:47.031572Z",
+        "problemType": "Regression",
+        "rows": 10000,
+        "columns": 3,
+        "healthScore": 74,
+        "bestModel": "Linear Regression",
+        "bestAccuracy": 90.33
+    },
+    {
+        "id": "cadee3b8-27c9-47fd-8e9a-dc3080eded8c",
+        "fileName": "diabetes.csv",
+        "date": "2026-07-18T17:49:34.267872Z",
+        "problemType": "Classification",
+        "rows": 768,
+        "columns": 9,
+        "healthScore": 88,
+        "bestModel": "Logistic Regression",
+        "bestAccuracy": 74.68
+    },
+    {
+        "id": "5a05a05b-5c5d-4dd8-8726-0a5f3f0be061",
+        "fileName": "083d4754-af64-4aef-a449-09cfe7bb12dd_diabetes.csv",
+        "date": "2026-07-18T17:37:44.421654Z",
+        "problemType": "Classification",
+        "rows": 768,
+        "columns": 9,
+        "healthScore": 88,
+        "bestModel": "Logistic Regression",
+        "bestAccuracy": 74.68
+    },
+    {
+        "id": "39f75357-bf9b-4c79-ad8b-10fe75c7dfb3",
+        "fileName": "Titanic-Dataset (1).csv",
+        "date": "2026-07-18T17:00:57.454552Z",
+        "problemType": "Classification",
+        "rows": 891,
+        "columns": 12,
+        "healthScore": 78,
+        "bestModel": "Logistic Regression",
+        "bestAccuracy": 82.12
+    },
+    {
+        "id": "eb44f6fb-421d-47d3-821c-9c570f8bc882",
+        "fileName": "Titanic-Dataset (1).csv",
+        "date": "2026-07-18T16:51:19.956888Z",
+        "problemType": "Classification",
+        "rows": 891,
+        "columns": 12,
+        "healthScore": 78,
+        "bestModel": "Logistic Regression",
+        "bestAccuracy": 82.12
+    }
+]

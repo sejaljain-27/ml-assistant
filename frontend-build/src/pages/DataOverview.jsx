@@ -1,26 +1,43 @@
-import { useEffect, useState } from 'react'
+import { useDataset } from '../context/DatasetContext.jsx'
+import { useNavigate } from 'react-router-dom'
 import Card from '../components/ui/Card.jsx'
-import Spinner from '../components/ui/Spinner.jsx'
 import RecommendationBox from '../components/ui/RecommendationBox.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import MissingValuesDonut from '../components/charts/MissingValuesDonut.jsx'
 import HorizontalBarChart from '../components/charts/HorizontalBarChart.jsx'
-import { datasetService } from '../services/datasetService.js'
 
 export default function DataOverview() {
-  const [data, setData] = useState(null)
+  const navigate = useNavigate()
+  const { dataset } = useDataset()
 
-  useEffect(() => {
-    let active = true
-    datasetService.getMissingValues().then((res) => {
-      if (active) setData(res)
-    })
-    return () => {
-      active = false
-    }
-  }, [])
+  if (!dataset || !dataset.analysisResult) {
+    return (
+      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center p-6 bg-surface-card rounded-xl border border-surface-border/40">
+        <h2 className="text-xl font-normal text-slate-100">No Dataset Active</h2>
+        <p className="mt-2 text-sm text-slate-400 max-w-sm">
+          Please upload and analyze a CSV dataset first to view data overview.
+        </p>
+        <button
+          type="button"
+          onClick={() => navigate('/upload')}
+          className="mt-6 btn-primary"
+        >
+          Go to Upload
+        </button>
+      </div>
+    )
+  }
 
-  if (!data) return <Spinner label="Crunching missing values..." />
+  const result = dataset.analysisResult
+  const totalMissingPct = result.data_quality.missing_percent
+  const totalCompletePct = Math.round((100 - totalMissingPct) * 100) / 100
+  const data = {
+    totalMissingPct,
+    totalCompletePct,
+    byColumn: result.data_quality.by_column || [],
+    recommendation: result.health_score.recommendations.join(" ") || "Dataset is in excellent condition.",
+    challenges: result.possible_challenges.challenges || []
+  }
 
   return (
     <div className="space-y-6">

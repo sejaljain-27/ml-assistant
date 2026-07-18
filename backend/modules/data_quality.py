@@ -28,9 +28,21 @@ def calculate_data_quality(df):
 
     score = max(0, min(100, score))
 
+    by_column = []
+    for col in df.columns:
+        col_missing = df[col].isnull().sum()
+        col_pct = round((col_missing / len(df)) * 100, 2) if len(df) > 0 else 0.0
+        by_column.append({
+            "column": col,
+            "pct": col_pct
+        })
+
     return {
         "data_quality_score": round(score, 2),
         "missing_percent": round(missing_percent, 2),
         "duplicate_percent": round(duplicate_percent, 2),
-        "constant_columns": constant_columns
+        "constant_columns": constant_columns,
+        "rows": int(df.shape[0]),
+        "columns": int(df.shape[1]),
+        "by_column": by_column
     }

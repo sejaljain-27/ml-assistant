@@ -1,0 +1,614 @@
+{
+    "task_detection": {
+        "task_type": "Classification",
+        "reason": "Target column has only 2 unique values and behaves like a categorical label."
+    },
+    "health_score": {
+        "score": 88,
+        "status": "Good",
+        "emoji": "\ud83d\udfe1",
+        "deductions": [
+            "-8 : Outliers detected",
+            "-4 : Feature scaling recommended"
+        ],
+        "recommendations": [
+            "Use IQR or Winsorization.",
+            "Apply StandardScaler or RobustScaler."
+        ]
+    },
+    "graphs": {
+        "missing_values": null,
+        "correlation_heatmap": "/graphs/correlation_heatmap.png",
+        "class_distribution": "/graphs/class_distribution.png",
+        "feature_importance": "/graphs/feature_importance.png",
+        "model_comparison": "/graphs/model_comparison.png"
+    },
+    "data_quality": {
+        "data_quality_score": 100,
+        "missing_percent": 0.0,
+        "duplicate_percent": 0.0,
+        "constant_columns": [],
+        "rows": 768,
+        "columns": 9,
+        "by_column": [
+            {
+                "column": "Pregnancies",
+                "pct": 0.0
+            },
+            {
+                "column": "Glucose",
+                "pct": 0.0
+            },
+            {
+                "column": "BloodPressure",
+                "pct": 0.0
+            },
+            {
+                "column": "SkinThickness",
+                "pct": 0.0
+            },
+            {
+                "column": "Insulin",
+                "pct": 0.0
+            },
+            {
+                "column": "BMI",
+                "pct": 0.0
+            },
+            {
+                "column": "DiabetesPedigreeFunction",
+                "pct": 0.0
+            },
+            {
+                "column": "Age",
+                "pct": 0.0
+            },
+            {
+                "column": "Outcome",
+                "pct": 0.0
+            }
+        ]
+    },
+    "imbalance_detection": {
+        "imbalanced": false,
+        "percentages": {
+            "0": 65.10416666666666,
+            "1": 34.89583333333333
+        },
+        "reason": "Classes reasonably balanced"
+    },
+    "correlation_detection": {
+        "highly_correlated": false,
+        "num_pairs": 0,
+        "pairs": [],
+        "columns_to_remove": [],
+        "features": [
+            "Pregnancies",
+            "Glucose",
+            "BloodPressure",
+            "SkinThickness",
+            "Insulin",
+            "BMI",
+            "DiabetesPedigreeFunction",
+            "Age",
+            "Outcome"
+        ],
+        "matrix": [
+            [
+                1.0,
+                0.1295,
+                0.1413,
+                -0.0817,
+                -0.0735,
+                0.0177,
+                -0.0335,
+                0.5443,
+                0.2219
+            ],
+            [
+                0.1295,
+                1.0,
+                0.1526,
+                0.0573,
+                0.3314,
+                0.2211,
+                0.1373,
+                0.2635,
+                0.4666
+            ],
+            [
+                0.1413,
+                0.1526,
+                1.0,
+                0.2074,
+                0.0889,
+                0.2818,
+                0.0413,
+                0.2395,
+                0.0651
+            ],
+            [
+                -0.0817,
+                0.0573,
+                0.2074,
+                1.0,
+                0.4368,
+                0.3926,
+                0.1839,
+                -0.114,
+                0.0748
+            ],
+            [
+                -0.0735,
+                0.3314,
+                0.0889,
+                0.4368,
+                1.0,
+                0.1979,
+                0.1851,
+                -0.0422,
+                0.1305
+            ],
+            [
+                0.0177,
+                0.2211,
+                0.2818,
+                0.3926,
+                0.1979,
+                1.0,
+                0.1406,
+                0.0362,
+                0.2927
+            ],
+            [
+                -0.0335,
+                0.1373,
+                0.0413,
+                0.1839,
+                0.1851,
+                0.1406,
+                1.0,
+                0.0336,
+                0.1738
+            ],
+            [
+                0.5443,
+                0.2635,
+                0.2395,
+                -0.114,
+                -0.0422,
+                0.0362,
+                0.0336,
+                1.0,
+                0.2384
+            ],
+            [
+                0.2219,
+                0.4666,
+                0.0651,
+                0.0748,
+                0.1305,
+                0.2927,
+                0.1738,
+                0.2384,
+                1.0
+            ]
+        ],
+        "reason": "No highly correlated features found."
+    },
+    "outlier_detection": {
+        "has_outliers": true,
+        "total_outliers": 146,
+        "columns": [
+            "Pregnancies",
+            "Glucose",
+            "BloodPressure",
+            "SkinThickness",
+            "Insulin",
+            "BMI",
+            "DiabetesPedigreeFunction",
+            "Age"
+        ],
+        "details": [
+            {
+                "column": "Pregnancies",
+                "count": 4,
+                "percentage": 0.52,
+                "lower_bound": -6.5,
+                "upper_bound": 13.5
+            },
+            {
+                "column": "Glucose",
+                "count": 5,
+                "percentage": 0.65,
+                "lower_bound": 37.12,
+                "upper_bound": 202.12
+            },
+            {
+                "column": "BloodPressure",
+                "count": 45,
+                "percentage": 5.86,
+                "lower_bound": 35.0,
+                "upper_bound": 107.0
+            },
+            {
+                "column": "SkinThickness",
+                "count": 1,
+                "percentage": 0.13,
+                "lower_bound": -48.0,
+                "upper_bound": 80.0
+            },
+            {
+                "column": "Insulin",
+                "count": 34,
+                "percentage": 4.43,
+                "lower_bound": -190.88,
+                "upper_bound": 318.12
+            },
+            {
+                "column": "BMI",
+                "count": 19,
+                "percentage": 2.47,
+                "lower_bound": 13.35,
+                "upper_bound": 50.55
+            },
+            {
+                "column": "DiabetesPedigreeFunction",
+                "count": 29,
+                "percentage": 3.78,
+                "lower_bound": -0.33,
+                "upper_bound": 1.2
+            },
+            {
+                "column": "Age",
+                "count": 9,
+                "percentage": 1.17,
+                "lower_bound": -1.5,
+                "upper_bound": 66.5
+            }
+        ],
+        "reason": "146 outliers detected."
+    },
+    "cardinality_detection": {
+        "high_cardinality": false,
+        "columns": [],
+        "details": [],
+        "reason": "No high-cardinality columns found."
+    },
+    "scaling_detection": {
+        "need_scaling": true,
+        "recommended_scaler": "StandardScaler",
+        "range_ratio": 846.0,
+        "details": [
+            {
+                "column": "Pregnancies",
+                "min": 0.0,
+                "max": 17.0,
+                "range": 17.0
+            },
+            {
+                "column": "Glucose",
+                "min": 0.0,
+                "max": 199.0,
+                "range": 199.0
+            },
+            {
+                "column": "BloodPressure",
+                "min": 0.0,
+                "max": 122.0,
+                "range": 122.0
+            },
+            {
+                "column": "SkinThickness",
+                "min": 0.0,
+                "max": 99.0,
+                "range": 99.0
+            },
+            {
+                "column": "Insulin",
+                "min": 0.0,
+                "max": 846.0,
+                "range": 846.0
+            },
+            {
+                "column": "BMI",
+                "min": 0.0,
+                "max": 67.1,
+                "range": 67.1
+            },
+            {
+                "column": "DiabetesPedigreeFunction",
+                "min": 0.078,
+                "max": 2.42,
+                "range": 2.34
+            },
+            {
+                "column": "Age",
+                "min": 21.0,
+                "max": 81.0,
+                "range": 60.0
+            },
+            {
+                "column": "Outcome",
+                "min": 0.0,
+                "max": 1.0,
+                "range": 1.0
+            }
+        ],
+        "reason": "Feature ranges differ significantly (ratio = 846.00)."
+    },
+    "feature_selection": {
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "Glucose",
+                "importance": 0.1146,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 2,
+                "feature": "BMI",
+                "importance": 0.0801,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 3,
+                "feature": "Pregnancies",
+                "importance": 0.061,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 4,
+                "feature": "Age",
+                "importance": 0.0514,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 5,
+                "feature": "DiabetesPedigreeFunction",
+                "importance": 0.0146,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 6,
+                "feature": "Insulin",
+                "importance": 0.0119,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 7,
+                "feature": "SkinThickness",
+                "importance": 0.0047,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 8,
+                "feature": "BloodPressure",
+                "importance": 0.0,
+                "recommendation": "Keep"
+            }
+        ],
+        "ignored_features": [],
+        "most_important": "Glucose",
+        "total_features_used": 8,
+        "total_features_ignored": 0,
+        "reason": "Top 10 features selected using Mutual Information."
+    },
+    "recommended_metric": {
+        "metrics": [
+            "Accuracy",
+            "Precision",
+            "Recall"
+        ],
+        "reason": "Balanced classification problem."
+    },
+    "recommended_preprocessing": [
+        {
+            "severity": "Medium",
+            "recommendation": "Handle Outliers",
+            "reason": "Extreme values detected.",
+            "action": "Use IQR method or Winsorization."
+        },
+        {
+            "severity": "Medium",
+            "recommendation": "Apply StandardScaler",
+            "reason": "Large feature scale differences detected.",
+            "action": "Normalize feature ranges."
+        },
+        {
+            "severity": "Medium",
+            "recommendation": "Use Simpler Models",
+            "reason": "Small dataset size detected.",
+            "action": "Prefer Logistic Regression or Random Forest."
+        }
+    ],
+    "suggested_models": {
+        "recommended_models": [
+            "Logistic Regression",
+            "Random Forest",
+            "SVM"
+        ]
+    },
+    "possible_challenges": {
+        "challenges": [
+            {
+                "type": "Small Dataset Size",
+                "severity": "Medium",
+                "description": "The dataset has only 768 rows. Neural networks or complex models might overfit."
+            }
+        ]
+    },
+    "model_comparison": {
+        "best_model": "Logistic Regression",
+        "comparison": {
+            "Logistic Regression": {
+                "Accuracy": 0.7468,
+                "Precision": 0.7502,
+                "Recall": 0.7468,
+                "F1 Score": 0.7482,
+                "Prediction Time (s)": 0.00047
+            },
+            "Decision Tree": {
+                "Accuracy": 0.7468,
+                "Precision": 0.7589,
+                "Recall": 0.7468,
+                "F1 Score": 0.7503,
+                "Prediction Time (s)": 0.00017
+            },
+            "Random Forest": {
+                "Accuracy": 0.7208,
+                "Precision": 0.7219,
+                "Recall": 0.7208,
+                "F1 Score": 0.7213,
+                "Prediction Time (s)": 0.00483
+            },
+            "XGBoost": {
+                "Accuracy": 0.7208,
+                "Precision": 0.737,
+                "Recall": 0.7208,
+                "F1 Score": 0.7253,
+                "Prediction Time (s)": 0.00111
+            }
+        },
+        "ranking": [
+            {
+                "Rank": 1,
+                "Model": "Logistic Regression",
+                "Accuracy": 0.7468,
+                "Precision": 0.7502,
+                "Recall": 0.7468,
+                "F1 Score": 0.7482,
+                "Prediction Time (s)": 0.00047
+            },
+            {
+                "Rank": 2,
+                "Model": "Decision Tree",
+                "Accuracy": 0.7468,
+                "Precision": 0.7589,
+                "Recall": 0.7468,
+                "F1 Score": 0.7503,
+                "Prediction Time (s)": 0.00017
+            },
+            {
+                "Rank": 3,
+                "Model": "Random Forest",
+                "Accuracy": 0.7208,
+                "Precision": 0.7219,
+                "Recall": 0.7208,
+                "F1 Score": 0.7213,
+                "Prediction Time (s)": 0.00483
+            },
+            {
+                "Rank": 4,
+                "Model": "XGBoost",
+                "Accuracy": 0.7208,
+                "Precision": 0.737,
+                "Recall": 0.7208,
+                "F1 Score": 0.7253,
+                "Prediction Time (s)": 0.00111
+            }
+        ]
+    },
+    "hyperparameter_tuning": {
+        "best_model": "Logistic Regression",
+        "best_params": {
+            "C": 0.01,
+            "solver": "lbfgs"
+        },
+        "best_cv_score": 0.7688,
+        "search_space": {
+            "C": [
+                0.01,
+                0.1,
+                1,
+                10
+            ],
+            "solver": [
+                "lbfgs",
+                "liblinear"
+            ]
+        }
+    },
+    "cross_validation": {
+        "cv_folds": 5,
+        "scores": [
+            0.7560975609756098,
+            0.8048780487804879,
+            0.7560975609756098,
+            0.7398373983739838,
+            0.7868852459016393
+        ],
+        "mean_score": 0.7688,
+        "std_score": 0.0236
+    },
+    "preview": {
+        "columns": [
+            "Pregnancies",
+            "Glucose",
+            "BloodPressure",
+            "SkinThickness",
+            "Insulin",
+            "BMI",
+            "DiabetesPedigreeFunction",
+            "Age",
+            "Outcome"
+        ],
+        "rows": [
+            {
+                "Pregnancies": 6,
+                "Glucose": 148,
+                "BloodPressure": 72,
+                "SkinThickness": 35,
+                "Insulin": 0,
+                "BMI": 33.6,
+                "DiabetesPedigreeFunction": 0.627,
+                "Age": 50,
+                "Outcome": 1
+            },
+            {
+                "Pregnancies": 1,
+                "Glucose": 85,
+                "BloodPressure": 66,
+                "SkinThickness": 29,
+                "Insulin": 0,
+                "BMI": 26.6,
+                "DiabetesPedigreeFunction": 0.351,
+                "Age": 31,
+                "Outcome": 0
+            },
+            {
+                "Pregnancies": 8,
+                "Glucose": 183,
+                "BloodPressure": 64,
+                "SkinThickness": 0,
+                "Insulin": 0,
+                "BMI": 23.3,
+                "DiabetesPedigreeFunction": 0.672,
+                "Age": 32,
+                "Outcome": 1
+            },
+            {
+                "Pregnancies": 1,
+                "Glucose": 89,
+                "BloodPressure": 66,
+                "SkinThickness": 23,
+                "Insulin": 94,
+                "BMI": 28.1,
+                "DiabetesPedigreeFunction": 0.167,
+                "Age": 21,
+                "Outcome": 0
+            },
+            {
+                "Pregnancies": 0,
+                "Glucose": 137,
+                "BloodPressure": 40,
+                "SkinThickness": 35,
+                "Insulin": 168,
+                "BMI": 43.1,
+                "DiabetesPedigreeFunction": 2.288,
+                "Age": 33,
+                "Outcome": 1
+            }
+        ]
+    }
+}

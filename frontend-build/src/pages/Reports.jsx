@@ -22,18 +22,21 @@ export default function Reports() {
 
   if (!data) return <Spinner label="Assembling report..." />
 
-  // Demo-only download: this is mock data, so we generate a small text file client-side.
-  const handleDownload = (report) => {
-    const blob = new Blob(
-      [`ML Compass AI — ${report.title}\n\nThis is a placeholder export generated from mock data.\n`],
-      { type: 'text/plain' },
-    )
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `${report.id}.${report.format.toLowerCase()}`
-    link.click()
-    URL.revokeObjectURL(url)
+  const handleDownload = async (report) => {
+    try {
+      const response = await fetch(`/api/download_report/${report.id}`)
+      if (!response.ok) throw new Error('Network response was not ok')
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `${report.title.replace(/\s+/g, '_')}_analysis.json`
+      link.click()
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error downloading report:', error)
+      alert('Could not download report from server.')
+    }
   }
 
   return (

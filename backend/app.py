@@ -6,6 +6,8 @@ import os
 import uuid
 import json
 
+from datetime import datetime
+
 from backend.modules.pipeline import analyze_dataset
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -62,16 +64,16 @@ async def analyze(
         
         if "graphs" in result:
             result["graphs"] = {
-                key: f"/graphs/{os.path.basename(path)}"
+                key: f"/graphs/{os.path.basename(path)}" if path else None
                 for key, path in result["graphs"].items()
             }
 
         for key, value in result.items():
             try:
                 jsonable_encoder(value)
-                print(f"✅ {key} is serializable")
+                print(f"OK: {key} is serializable")
             except Exception as e:
-                print(f"❌ {key} is NOT serializable")
+                print(f"FAIL: {key} is NOT serializable")
                 print(e)
         # Save report
         report_path = os.path.join(
@@ -81,6 +83,40 @@ async def analyze(
 
         with open(report_path, "w") as f:
             json.dump(result, f, indent=4, default=str)
+
+        # Save run metadata in history index
+        try:
+            history_path = os.path.join(BASE_DIR, "history_index.json")
+            best_model = result["model_comparison"]["best_model"]
+            is_classification = result["task_detection"]["task_type"] == "Classification"
+            
+            if is_classification:
+                best_accuracy = round(result["model_comparison"]["comparison"][best_model]["Accuracy"] * 100, 2)
+            else:
+                best_accuracy = round(result["model_comparison"]["comparison"][best_model]["R² Score"] * 100, 2)
+
+            history_entry = {
+                "id": analysis_id,
+                "fileName": file.filename,
+                "date": datetime.now().isoformat() + "Z",
+                "problemType": result["task_detection"]["task_type"],
+                "rows": result["data_quality"]["rows"],
+                "columns": result["data_quality"]["columns"],
+                "healthScore": result["health_score"]["score"],
+                "bestModel": best_model,
+                "bestAccuracy": best_accuracy
+            }
+
+            history_list = []
+            if os.path.exists(history_path):
+                with open(history_path, "r") as f:
+                    history_list = json.load(f)
+            
+            history_list.insert(0, history_entry)
+            with open(history_path, "w") as f:
+                json.dump(history_list, f, indent=4)
+        except Exception as eh:
+            print("Error writing to history index:", eh)
 
         return {
             "status": "success",
@@ -130,3 +166,75 @@ def get_graph(filename: str):
         path=graph_path,
         media_type="image/png"
     )
+
+@app.get("/history")
+def get_history():
+    history_path = os.path.join(BASE_DIR, "history_index.json")
+    if not os.path.exists(history_path):
+        return []
+    try:
+        with open(history_path, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/reports")
+def get_reports():
+    history_path = os.path.join(BASE_DIR, "history_index.json")
+    if not os.path.exists(history_path):
+        return {
+            "generatedAt": "",
+            "available": [],
+            "preview": {
+                "healthScore": 0,
+                "missingPct": 0.0,
+                "topFeatures": []
+            }
+        }
+    try:
+        with open(history_path, "r") as f:
+            history_list = json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    if not history_list:
+        return {
+            "generatedAt": "",
+            "available": [],
+            "preview": {
+                "healthScore": 0,
+                "missingPct": 0.0,
+                "topFeatures": []
+            }
+        }
+
+    latest = history_list[0]
+    report_file = os.path.join(REPORT_DIR, f"{latest['id']}.json")
+    top_features = []
+    missing_pct = 0.0
+    if os.path.exists(report_file):
+        try:
+            with open(report_file, "r") as f:
+                data = json.load(f)
+                top_features = [f["feature"] for f in data.get("feature_selection", {}).get("top_features", [])[:5]]
+                missing_pct = data.get("data_quality", {}).get("missing_percent", 0.0)
+        except Exception:
+            pass
+
+    return {
+        "generatedAt": latest["date"],
+        "available": [
+            {
+                "id": latest["id"],
+                "title": f"Comprehensive Report ({latest['fileName']})",
+                "description": f"Full analysis report generated on {latest['date']}.",
+                "format": "JSON",
+                "icon": "file-text"
+            }
+        ],
+        "preview": {
+            "healthScore": latest["healthScore"],
+            "missingPct": missing_pct,
+            "topFeatures": top_features
+        }
+    }

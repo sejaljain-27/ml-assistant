@@ -20,20 +20,30 @@ def detect_correlation(df, threshold=0.90):
             "num_pairs": 0,
             "pairs": [],
             "columns_to_remove": [],
+            "features": list(numeric_df.columns),
+            "matrix": [[1.0] for _ in range(numeric_df.shape[1])] if numeric_df.shape[1] > 0 else [],
             "reason": "Not enough numerical columns."
         }
-    corr_matrix = numeric_df.corr().abs()
+
+    corr_matrix = numeric_df.corr().fillna(0.0)
+    for col in corr_matrix.columns:
+        corr_matrix.loc[col, col] = 1.0
+
+    features = list(corr_matrix.columns)
+    matrix = [[round(float(val), 4) for val in row] for row in corr_matrix.values.tolist()]
+
+    abs_corr_matrix = corr_matrix.abs()
 
     correlated_pairs = []
     columns_to_remove = set()
 
-    columns = corr_matrix.columns
+    columns = abs_corr_matrix.columns
 
     for i in range(len(columns)):
 
         for j in range(i + 1, len(columns)):
 
-            corr_value = corr_matrix.iloc[i, j]
+            corr_value = abs_corr_matrix.iloc[i, j]
 
             if corr_value >= threshold:
 
@@ -62,6 +72,10 @@ def detect_correlation(df, threshold=0.90):
         "pairs": correlated_pairs,
 
         "columns_to_remove": list(columns_to_remove),
+
+        "features": features,
+
+        "matrix": matrix,
 
         "reason": (
             f"{len(correlated_pairs)} highly correlated feature pair(s) detected."

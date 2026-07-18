@@ -4,14 +4,13 @@ import { UploadCloud, Compass, FileCheck2 } from 'lucide-react'
 import { useDataset } from '../context/DatasetContext.jsx'
 import { datasetService } from '../services/datasetService.js'
 
-const MOCK_COLUMNS = ['Survived', 'Pclass', 'Sex', 'Age', 'Fare', 'Embarked', 'SibSp', 'Parch']
-
 export default function UploadDataset() {
   const navigate = useNavigate()
   const { setDataset, setIsAnalyzing } = useDataset()
   const inputRef = useRef(null)
 
   const [file, setFile] = useState(null)
+  const [columns, setColumns] = useState([])
   const [targetColumn, setTargetColumn] = useState('')
   const [isDragging, setIsDragging] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -19,6 +18,24 @@ export default function UploadDataset() {
   const handleFile = (selected) => {
     if (!selected) return
     setFile(selected)
+    setTargetColumn('')
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const text = e.target.result
+      const firstLine = text.split('\n')[0]
+      const headers = firstLine
+        .split(',')
+        .map((h) => h.trim().replace(/^["']|["']$/g, '')) // remove quotes if any
+        .filter(Boolean)
+      setColumns(headers)
+      if (headers.length > 0) {
+        setTargetColumn(headers[headers.length - 1]) // default to last column
+      }
+    }
+    // Read first 8KB to be fast and safe
+    const blob = selected.slice(0, 8192)
+    reader.readAsText(blob)
   }
 
   const onDrop = (e) => {
@@ -33,9 +50,16 @@ export default function UploadDataset() {
     setSubmitting(true)
     setIsAnalyzing(true)
     try {
-      await datasetService.uploadDataset(file, targetColumn)
-      setDataset({ fileName: file.name, targetColumn })
+      const res = await datasetService.uploadDataset(file, targetColumn)
+      setDataset({
+        fileName: file.name,
+        targetColumn,
+        analysisResult: res.analysis
+      })
       navigate('/')
+    } catch (e) {
+      console.error(e)
+      alert('Error analyzing dataset: ' + (e.response?.data?.detail || e.message))
     } finally {
       setSubmitting(false)
       setIsAnalyzing(false)
@@ -107,7 +131,7 @@ export default function UploadDataset() {
             className="input-field sm:flex-1"
           >
             <option value="">Select target column</option>
-            {MOCK_COLUMNS.map((col) => (
+            {columns.map((col) => (
               <option key={col} value={col}>
                 {col}
               </option>

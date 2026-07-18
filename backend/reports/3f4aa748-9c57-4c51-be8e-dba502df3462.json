@@ -1,0 +1,308 @@
+{
+    "task_detection": {
+        "task_type": "Classification",
+        "reason": "Target column has only 2 unique values and behaves like a categorical label."
+    },
+    "health_score": {
+        "score": 100,
+        "status": "Excellent",
+        "emoji": "\ud83d\udfe2",
+        "deductions": [],
+        "recommendations": []
+    },
+    "graphs": {
+        "missing_values": null,
+        "correlation_heatmap": "/graphs/correlation_heatmap.png",
+        "class_distribution": "/graphs/class_distribution.png",
+        "feature_importance": "/graphs/feature_importance.png",
+        "model_comparison": "/graphs/model_comparison.png"
+    },
+    "data_quality": {
+        "data_quality_score": 100,
+        "missing_percent": 0.0,
+        "duplicate_percent": 0.0,
+        "constant_columns": [],
+        "rows": 100,
+        "columns": 3,
+        "by_column": [
+            {
+                "column": "cgpa",
+                "pct": 0.0
+            },
+            {
+                "column": "resume_score",
+                "pct": 0.0
+            },
+            {
+                "column": "placed",
+                "pct": 0.0
+            }
+        ]
+    },
+    "imbalance_detection": {
+        "imbalanced": false,
+        "percentages": {
+            "1": 50.0,
+            "0": 50.0
+        },
+        "reason": "Classes reasonably balanced"
+    },
+    "correlation_detection": {
+        "highly_correlated": false,
+        "num_pairs": 0,
+        "pairs": [],
+        "columns_to_remove": [],
+        "features": [
+            "cgpa",
+            "resume_score",
+            "placed"
+        ],
+        "matrix": [
+            [
+                1.0,
+                0.0367,
+                0.8723
+            ],
+            [
+                0.0367,
+                1.0,
+                0.1341
+            ],
+            [
+                0.8723,
+                0.1341,
+                1.0
+            ]
+        ],
+        "reason": "No highly correlated features found."
+    },
+    "outlier_detection": {
+        "has_outliers": false,
+        "total_outliers": 0,
+        "columns": [],
+        "details": [],
+        "reason": "No outliers detected."
+    },
+    "cardinality_detection": {
+        "high_cardinality": false,
+        "columns": [],
+        "details": [],
+        "reason": "No high-cardinality columns found."
+    },
+    "scaling_detection": {
+        "need_scaling": false,
+        "recommended_scaler": null,
+        "range_ratio": 4.13,
+        "details": [
+            {
+                "column": "cgpa",
+                "min": 5.27,
+                "max": 9.4,
+                "range": 4.13
+            },
+            {
+                "column": "resume_score",
+                "min": 4.95,
+                "max": 9.06,
+                "range": 4.11
+            },
+            {
+                "column": "placed",
+                "min": 0.0,
+                "max": 1.0,
+                "range": 1.0
+            }
+        ],
+        "reason": "Feature ranges are relatively similar."
+    },
+    "feature_selection": {
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "cgpa",
+                "importance": 0.6145,
+                "recommendation": "Keep"
+            },
+            {
+                "rank": 2,
+                "feature": "resume_score",
+                "importance": 0.0011,
+                "recommendation": "Keep"
+            }
+        ],
+        "ignored_features": [],
+        "most_important": "cgpa",
+        "total_features_used": 2,
+        "total_features_ignored": 0,
+        "reason": "Top 10 features selected using Mutual Information."
+    },
+    "recommended_metric": {
+        "metrics": [
+            "Accuracy",
+            "Precision",
+            "Recall"
+        ],
+        "reason": "Balanced classification problem."
+    },
+    "recommended_preprocessing": [
+        {
+            "severity": "Medium",
+            "recommendation": "Use Simpler Models",
+            "reason": "Small dataset size detected.",
+            "action": "Prefer Logistic Regression or Random Forest."
+        }
+    ],
+    "suggested_models": {
+        "recommended_models": [
+            "Logistic Regression",
+            "Random Forest",
+            "SVM"
+        ]
+    },
+    "possible_challenges": {
+        "challenges": [
+            {
+                "type": "Small Dataset Size",
+                "severity": "Medium",
+                "description": "The dataset has only 100 rows. Neural networks or complex models might overfit."
+            }
+        ]
+    },
+    "model_comparison": {
+        "best_model": "Logistic Regression",
+        "comparison": {
+            "Logistic Regression": {
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.00062
+            },
+            "Decision Tree": {
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.00016
+            },
+            "Random Forest": {
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.00563
+            },
+            "XGBoost": {
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.006
+            }
+        },
+        "ranking": [
+            {
+                "Rank": 1,
+                "Model": "Logistic Regression",
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.00062
+            },
+            {
+                "Rank": 2,
+                "Model": "Decision Tree",
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.00016
+            },
+            {
+                "Rank": 3,
+                "Model": "Random Forest",
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.00563
+            },
+            {
+                "Rank": 4,
+                "Model": "XGBoost",
+                "Accuracy": 1.0,
+                "Precision": 1.0,
+                "Recall": 1.0,
+                "F1 Score": 1.0,
+                "Prediction Time (s)": 0.006
+            }
+        ]
+    },
+    "hyperparameter_tuning": {
+        "best_model": "Logistic Regression",
+        "best_params": {
+            "C": 1,
+            "solver": "lbfgs"
+        },
+        "best_cv_score": 0.975,
+        "search_space": {
+            "C": [
+                0.01,
+                0.1,
+                1,
+                10
+            ],
+            "solver": [
+                "lbfgs",
+                "liblinear"
+            ]
+        }
+    },
+    "cross_validation": {
+        "cv_folds": 5,
+        "scores": [
+            1.0,
+            1.0,
+            1.0,
+            0.875,
+            1.0
+        ],
+        "mean_score": 0.975,
+        "std_score": 0.05
+    },
+    "preview": {
+        "columns": [
+            "cgpa",
+            "resume_score",
+            "placed"
+        ],
+        "rows": [
+            {
+                "cgpa": 8.14,
+                "resume_score": 6.52,
+                "placed": 1
+            },
+            {
+                "cgpa": 6.17,
+                "resume_score": 5.17,
+                "placed": 0
+            },
+            {
+                "cgpa": 8.27,
+                "resume_score": 8.86,
+                "placed": 1
+            },
+            {
+                "cgpa": 6.88,
+                "resume_score": 7.27,
+                "placed": 1
+            },
+            {
+                "cgpa": 7.52,
+                "resume_score": 7.3,
+                "placed": 1
+            }
+        ]
+    }
+}
