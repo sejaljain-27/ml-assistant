@@ -19,6 +19,7 @@ from .dataset_health_score import calculate_health_score
 from .graph_generator import GraphGenerator
 from .hyperparameter_tuning import tune_best_model
 from .cross_validation import cross_validate_model
+from .pipeline_generator import generate_pipeline_code
 
 
 def analyze_dataset(file_path, target_column):
@@ -216,6 +217,34 @@ def analyze_dataset(file_path, target_column):
         task
     )
     
+    # ======================================
+    # Pipeline Code Generation
+    # ======================================
+
+    pipeline_code = generate_pipeline_code(
+
+        numerical_features=prepared["X_train"]
+            .select_dtypes(include=["int64", "float64"])
+            .columns.tolist(),
+
+        categorical_features=prepared["X_train"]
+            .select_dtypes(include=["object", "category", "bool"])
+            .columns.tolist(),
+
+        target_column=target_column,
+
+        model_name=best_model_name,
+
+        scaler="StandardScaler",
+
+        numerical_imputer="median",
+
+        categorical_imputer="most_frequent",
+
+        encoder="OneHotEncoder"
+
+    )
+    
     graph_generator=GraphGenerator()
     graphs=graph_generator.generate_all(
         df,
@@ -265,6 +294,8 @@ def analyze_dataset(file_path, target_column):
         "hyperparameter_tuning": tuning_result["summary"],
 
         "cross_validation": cross_validation,
+        
+        "pipeline_code": pipeline_code,
 
         "preview": preview
 
