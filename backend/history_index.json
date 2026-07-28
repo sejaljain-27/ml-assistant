@@ -1,5 +1,27 @@
 [
     {
+        "id": "7ff0ce79-0bf9-4ba7-8c9f-5fbb15588ed5",
+        "fileName": "diabetes.csv",
+        "date": "2026-07-28T20:30:47.219616Z",
+        "problemType": "Classification",
+        "rows": 768,
+        "columns": 9,
+        "healthScore": 88,
+        "bestModel": "Logistic Regression",
+        "bestAccuracy": 74.68
+    },
+    {
+        "id": "80f91640-64c9-4c40-8515-85b75b2044a4",
+        "fileName": "Salary_dataset.csv",
+        "date": "2026-07-28T20:22:07.132012Z",
+        "problemType": "Regression",
+        "rows": 30,
+        "columns": 3,
+        "healthScore": 78,
+        "bestModel": "Linear Regression",
+        "bestAccuracy": 89.14
+    },
+    {
         "id": "01802a94-e093-4d13-a0bc-f354776bca51",
         "fileName": "diabetes.csv",
         "date": "2026-07-28T19:55:25.909193Z",

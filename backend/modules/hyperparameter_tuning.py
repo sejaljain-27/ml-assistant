@@ -44,9 +44,8 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         model = DecisionTreeClassifier(random_state=42)
 
         params = {
-            "max_depth": [None, 5, 10, 20],
-            "min_samples_split": [2, 5, 10],
-            "criterion": ["gini", "entropy"]
+            "max_depth": [5, 10],
+            "min_samples_split": [2, 5]
         }
 
     elif best_model_name == "Random Forest":
@@ -54,10 +53,8 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         model = RandomForestClassifier(random_state=42)
 
         params = {
-            "n_estimators": [100, 200, 300],
-            "max_depth": [None, 10, 20],
-            "min_samples_split": [2, 5],
-            "criterion": ["gini", "entropy"]
+            "n_estimators": [50, 100],
+            "max_depth": [10, 20]
         }
 
     elif best_model_name == "XGBoost" and XGBOOST_AVAILABLE:
@@ -68,9 +65,9 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         )
 
         params = {
-            "learning_rate": [0.01, 0.1],
-            "max_depth": [3, 5, 7],
-            "n_estimators": [100, 200]
+            "learning_rate": [0.1],
+            "max_depth": [3, 5],
+            "n_estimators": [100]
         }
 
     # -------------------------
@@ -88,8 +85,8 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         model = DecisionTreeRegressor(random_state=42)
 
         params = {
-            "max_depth": [None, 5, 10, 20],
-            "min_samples_split": [2, 5, 10]
+            "max_depth": [5, 10],
+            "min_samples_split": [2, 5]
         }
 
     elif best_model_name == "Random Forest Regressor":
@@ -97,9 +94,8 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         model = RandomForestRegressor(random_state=42)
 
         params = {
-            "n_estimators": [100, 200, 300],
-            "max_depth": [None, 10, 20],
-            "min_samples_split": [2, 5]
+            "n_estimators": [50, 100],
+            "max_depth": [10, 20]
         }
 
     elif best_model_name == "XGBoost Regressor" and XGBOOST_AVAILABLE:
@@ -107,9 +103,9 @@ def tune_best_model(best_model_name, pipeline_result, task_type):
         model = XGBRegressor(random_state=42)
 
         params = {
-            "learning_rate": [0.01, 0.1],
-            "max_depth": [3, 5, 7],
-            "n_estimators": [100, 200]
+            "learning_rate": [0.1],
+            "max_depth": [3, 5],
+            "n_estimators": [100]
         }
 
     else:
