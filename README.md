@@ -1,229 +1,180 @@
-ML Assistant
+#  ML Compass AI (ML Assistant)
 
-ML Assistant is an automated machine learning analysis system that helps users understand a dataset before building predictive models. Instead of directly training a machine learning model, the system first analyzes the dataset, identifies potential issues, recommends preprocessing techniques, suggests suitable machine learning algorithms, trains multiple baseline models, compares their performance, and generates visualizations.
-The project is designed to automate the repetitive tasks involved in the early stages of a machine learning workflow while providing interpretable recommendations for data preprocessing and model selection.
+An automated machine learning analysis and evaluation platform designed to help users inspect datasets, check data quality, generate recommendations, and train baseline models through an interactive, premium dashboard interface.
 
-Problem Statement
+---
 
-Preparing a dataset for machine learning usually requires several manual steps, including checking data quality, handling missing values, detecting outliers, selecting suitable preprocessing techniques, choosing evaluation metrics, and comparing different machine learning algorithms. These tasks are repetitive and often require prior machine learning experience.
-ML Assistant automates these initial stages by analyzing a dataset, identifying common data issues, recommending preprocessing methods, training multiple machine learning models, evaluating their performance, and presenting the results in a structured report.
+## Contributors & Team
 
-Pipeline
+This project was built and is maintained by:
+* **Kashish Rathod**
+* **Sejal Jain**
 
-The complete pipeline follows these stages:
+---
 
-Dataset Loading
+## Problem Statement & Overview
 
-The system loads a CSV dataset and identifies the target column provided by the user.
+Preparing a raw dataset for machine learning requires a series of tedious, manual, and repetitive tasks:
+1. **Data Quality Analysis:** Finding missing values, identifying duplicates, detecting high cardinality, and computing outliers.
+2. **Preprocessing Choice:** Determining whether to scale, encode, impute, or drop features.
+3. **Model Selection & Comparison:** Training and assessing multiple baseline models to find the best algorithm for the task.
 
-Task Detection
+**ML Compass AI** automates this workflow. It ingests a CSV dataset, detects whether the target is a **Classification** or **Regression** problem, executes a multi-stage diagnostic pipeline, generates data visualizations, trains multiple candidate models, and serves these insights via a React dashboard.
 
-The target column is automatically analyzed to determine whether the dataset represents a Classification or Regression problem.
+---
 
-Data Quality Analysis
+##  Key Features
 
-The dataset is inspected for common quality issues including:
+###  Frontend (ML Compass AI Dashboard)
+* **Dataset Health Score:** A comprehensive visual indicator reflecting the general cleaniness and readiness of your data.
+* **Smart Banners & Alerts:** Direct notifications for critical issues like high missingness or duplicate records.
+* **Interactive Charts:** High-fidelity, client-side charts mapping class distribution, correlation heatmaps, missing value profiles, feature importance, and model performance comparison.
+* **Step-by-Step Pipeline Viewer:** Clear visual indicators showing which stages of the automated ML process have succeeded or encountered warnings.
+* **Actionable Recommendations:** Side-by-side lists outlining necessary preprocessing actions and suggested ML models.
 
-- Missing values
-- Duplicate records
-- Constant columns
+###  Backend (FastAPI ML Core)
+* **Automated Task Detection:** Distinguishes classification tasks from regression tasks by analyzing target class cardinality.
+* **Data Inspection & Profiling:** Checks scaling requirements, class imbalance, feature variance, and multi-collinearity.
+* **Feature Selection:** Ranks the most influential columns using random forest feature importances.
+* **Model Training & Comparison:** Trains models (Logistic Regression, Decision Trees, Random Forests, XGBoost, CatBoost, etc.) and compares them using metric scoring (Accuracy, F1, MAE, R² Score, etc.).
+* **Visualization Generator:** Generates high-quality charts using `Matplotlib` and outputs them directly for the frontend to consume.
 
-A Data Quality Score is calculated based on these observations.
+---
 
-Dataset Health Score
+## Project Structure
 
-The Dataset Health Score summarizes the overall quality of the dataset by considering multiple factors including:
-
-- Missing values
-- Duplicate rows
-- Outliers
-- Highly correlated features
-- High-cardinality categorical columns
-- Feature scaling requirements
-- Class imbalance
-
-The final score categorizes the dataset into quality levels and provides recommendations for improvement.
-
-Data Inspection
-
-The system automatically performs:
-
-- Class imbalance detection
-- Correlation analysis
-- Outlier detection
-- High-cardinality detection
-- Feature scaling analysis
-
-Each detector provides both statistical information and recommendations.
-
-Feature Analysis
-
-Feature importance is calculated to identify the most influential predictors.
-
-The system also identifies columns that are likely to contribute little to model performance, such as identifier columns and nearly unique features.
-
-Preprocessing Recommendation
-
-Based on the detected dataset characteristics, the system recommends preprocessing techniques including:
-
-- Missing value imputation
-- One-Hot Encoding
-- Target Encoding
-- Feature scaling
-- Outlier handling
-- Removal of highly correlated features
-- Duplicate removal
-- Principal Component Analysis (PCA)
-- Class imbalance handling
-
-Model Recommendation
-
-Suitable machine learning algorithms are recommended automatically according to the detected problem type.
-
-Classification models include:
-
-- Logistic Regression
-- Decision Tree
-- Random Forest
-- XGBoost
-- CatBoost
-
-Regression models include:
-
-- Linear Regression
-- Decision Tree Regressor
-- Random Forest Regressor
-- XGBoost Regressor
-
-Model Training
-
-The dataset is automatically divided into training and testing sets.
-
-A preprocessing pipeline is constructed before training multiple machine learning models using the processed dataset.
-
-Model Evaluation
-
-Classification models are evaluated using:
-
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-- Prediction Time
-
-Regression models are evaluated using:
-
-- Mean Absolute Error (MAE)
-- Root Mean Squared Error (RMSE)
-- R² Score
-- Prediction Time
-
-The best-performing model is selected based on the evaluation metrics.
-
-Graph Generation
-
-The system automatically generates several visualizations, including:
-
-- Missing Values Graph
-- Correlation Heatmap
-- Class Distribution
-- Feature Importance Graph
-- Model Comparison Graph
-
-Project Structure
-
-backend/
+```text
+ml-assistant/
 │
-├── modules/
-│   ├── task_detection.py
-│   ├── data_quality.py
-│   ├── dataset_health_score.py
-│   ├── imbalance_detector.py
-│   ├── correlation_detector.py
-│   ├── outlier_detector.py
-│   ├── cardinality_detector.py
-│   ├── scaling_detector.py
-│   ├── feature_selection.py
-│   ├── recommend_preprocessing.py
-│   ├── suggested_models.py
-│   ├── possible_challenges.py
-│   ├── prepare_pipeline.py
-│   ├── train_models.py
-│   ├── model_comparison.py
-│   ├── graph_generator.py
-│   └── pipeline.py
+├── backend/                             # Python FastAPI Backend
+│   ├── modules/                         # Core Machine Learning Modules
+│   │   ├── cardinality_detector.py      # Identifies high cardinality categorical columns
+│   │   ├── correlation_detector.py      # Detects highly correlated features
+│   │   ├── cross_validation.py          # Performs model cross-validation
+│   │   ├── data_quality.py              # Analyzes missing values, rows, columns, and duplicates
+│   │   ├── dataset_health_score.py      # Computes overall dataset health metrics
+│   │   ├── feature_selection.py         # Selects important features and flags low-impact columns
+│   │   ├── graph_generator.py           # Generates visualization PNGs (heatmaps, distributions, etc.)
+│   │   ├── hyperparameter_tuning.py     # Simple hyperparameter optimization algorithms
+│   │   ├── imbalance_detector.py        # Identifies target class imbalances (classification)
+│   │   ├── metric_recommender.py        # Suggests evaluation metrics based on target structure
+│   │   ├── model_comparison.py          # Formats and orders model benchmark comparisons
+│   │   ├── outlier_detector.py          # Identifies statistical outliers using IQR
+│   │   ├── pipeline.py                  # Core analysis pipeline driver orchestrating modules
+│   │   ├── pipeline_generator.py        # Orchestrates and validates pipeline generation flow
+│   │   ├── possible_challenges.py       # Identifies threats like small datasets or class imbalance
+│   │   ├── prepare_pipeline.py          # Builds scikit-learn preprocessors (scaling/encoding/imputing)
+│   │   ├── recommend_preprocessing.py   # Generates textual recommendations for raw dataset cleanup
+│   │   ├── report_generator.py          # Summarizes pipeline outputs into JSON format
+│   │   ├── scaling_detector.py          # Identifies standard scaling or normalization requirements
+│   │   ├── suggested_models.py          # Suggests which ML models are relevant to the task
+│   │   ├── task_detection.py            # Automatically detects Regression vs. Classification
+│   │   └── train_models.py              # Automates baseline model training and prediction evaluation
+│   │
+│   ├── app.py                           # Main FastAPI server entry point (contains route endpoints)
+│   ├── history_index.json               # Local registry storing history of uploaded datasets & metadata
+│   ├── graphs/                          # Storage for generated pipeline analysis graphs (gitignored)
+│   ├── reports/                         # Storage for complete analysis JSON files (gitignored)
+│   └── uploads/                         # Storage for uploaded source CSV files (gitignored)
 │
-├── test.py
-├── requirements.txt
-└── README.md
+├── frontend-build/                      # React & Vite Frontend Dashboard
+│   ├── src/
+│   │   ├── assets/                      # Global images, styles, and static assets
+│   │   ├── components/
+│   │   │   ├── charts/                  # Recharts components (Pie, Bar, Radar, etc.)
+│   │   │   ├── layout/                  # Page layout shells (Sidebar, Topbar, Content wrappers)
+│   │   │   └── ui/                      # Reusable UI elements (Card, StatCard, Badge, Spinner)
+│   │   ├── context/                     # Global State Management (e.g. DatasetContext)
+│   │   ├── pages/                       # Page routes (Dashboard, Pipeline, Upload, Reports)
+│   │   ├── services/                    # API clients and data fetching layers (FastAPI integrations)
+│   │   ├── App.jsx                      # App entry, route setup, and page layout layout wrappers
+│   │   └── main.jsx                     # DOM mount point
+│   │
+│   ├── index.html                       # Entry HTML document
+│   ├── tailwind.config.js               # Utility CSS styling config
+│   ├── vite.config.js                   # Vite dev server and backend API proxy settings
+│   └── package.json                     # Frontend npm dependencies and run scripts
+│
+├── test.py                              # Local sandbox to run the backend pipeline directly on CSV files
+└── README.md                            # Comprehensive project guide (this file)
+```
 
-Running the Project
+---
 
-Install the required dependencies.
+##  Installation & Setup
 
+Before starting, ensure you have the following installed:
+* **Python 3.8+**
+* **Node.js 18+** & **npm**
+
+---
+
+### 1. Backend Setup & Run
+
+Go to the project root directory and run the backend FastAPI server.
+
+#### Option A: Running the FastAPI Web Server (Recommended for GUI Dashboard)
+Run the server with Uvicorn:
 ```bash
-pip install -r requirements.txt
+python -m uvicorn backend.app:app --reload
 ```
+* Note: Running with `python -m` ensures the root project folder is added to Python's system path, which resolves module paths like `backend.modules.pipeline`.
+* The server will run on `http://127.0.0.1:8000`.
 
-Update the dataset path and target column inside `test.py`.
-
-Example:
-
-```python
-from backend.modules.pipeline import analyze_dataset
-
-result = analyze_dataset(
-    "Titanic-Dataset.csv",
-    "Survived"
-)
-
-print(result)
-```
-
-Run the project:
-
+#### Option B: Running the Pipeline CLI Sandbox (For quick command line tests)
+Modify `test.py` at the root with your custom `.csv` dataset path and target column, then run:
 ```bash
 python test.py
 ```
 
-Output
+---
 
-The generated analysis includes:
+### 2. Frontend Setup & Run
 
-- Task Detection
-- Dataset Health Score
-- Data Quality Report
-- Class Imbalance Analysis
-- Correlation Analysis
-- Outlier Detection
-- High Cardinality Detection
-- Scaling Recommendation
-- Feature Importance
-- Recommended Evaluation Metrics
-- Preprocessing Recommendations
-- Suggested Machine Learning Models
-- Possible Dataset Challenges
-- Model Comparison
-- Generated Graphs
+Navigate to the `frontend-build` directory, install packages, and spin up the development server.
 
-Technologies Used
+```bash
+# Navigate to the frontend folder
+cd frontend-build
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Matplotlib
-- XGBoost
+# Install dependencies
+npm install
 
-Future Work
+# Run the development server
+npm run dev
+```
 
-The following improvements are planned for future development:
+* The development server will run on `http://localhost:5173`.
+* Vite is configured to proxy all `/api` requests to the backend server running at `http://127.0.0.1:8000`.
 
-- FastAPI Backend
-- React Dashboard
-- Dataset Upload Interface
-- Downloadable Analysis Reports
-- Hyperparameter Optimization
-- Model Explainability
-- Experiment Tracking
-- Model Deployment
+---
+
+##  Integration & API Architecture
+
+The frontend and backend interact seamlessly through API calls:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant React Dashboard
+    participant Vite Proxy
+    participant FastAPI Server
+
+    User->>React Dashboard: Uploads Titanic.csv + Selects "Survived"
+    React Dashboard->>Vite Proxy: POST /api/analyze (FormData)
+    Note over Vite Proxy: Rewrites /api to target server
+    Vite Proxy->>FastAPI Server: POST /analyze (multipart/form-data)
+    Note over FastAPI Server: 1. Saves dataset in uploads/<br/>2. Automatically runs ML Pipeline modules<br/>3. Trains baseline models & scores metrics<br/>4. Generates data visualization charts
+    FastAPI Server-->>Vite Proxy: 200 OK (Returns analysis JSON)
+    Vite Proxy-->>React Dashboard: Returns JSON response
+    React Dashboard->>User: Displays Health metrics, interactive graphs, and model recommendations
+```
+
+* **Vite API Proxying:** Defined in [`vite.config.js`](file:///c:/Users/Sejal%20Jain/Downloads/ml-assisant/frontend-build/vite.config.js), any query sent from React to `/api` is transparently forwarded to `http://127.0.0.1:8000`, bypassing CORS policies and making integration clean.
+
+---
+
+##  Technologies & Stack
+
+* **Frontend:** React, TailwindCSS, Vite, Lucide Icons, Axios, Recharts (for clean, responsive vector graphs)
+* **Backend:** FastAPI (Python), Uvicorn, Pandas, NumPy, Scikit-learn, XGBoost, Matplotlib (for visualization rendering)

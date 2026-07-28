@@ -1,5 +1,16 @@
 [
     {
+        "id": "01802a94-e093-4d13-a0bc-f354776bca51",
+        "fileName": "diabetes.csv",
+        "date": "2026-07-28T19:55:25.909193Z",
+        "problemType": "Classification",
+        "rows": 768,
+        "columns": 9,
+        "healthScore": 88,
+        "bestModel": "Logistic Regression",
+        "bestAccuracy": 74.68
+    },
+    {
         "id": "3f4aa748-9c57-4c51-be8e-dba502df3462",
         "fileName": "placement (3).csv",
         "date": "2026-07-18T18:22:55.924883Z",
